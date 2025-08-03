@@ -7,7 +7,7 @@ export default function handler(req, res) {
     return res.status(405).json({ error: 'Only GET method allowed' });
   }
 
-  const url = 'https://randomuser.me/api/';
+  const url = 'https://catfact.ninja/fact';
 
   https.get(url, (apiRes) => {
     let data = '';
@@ -19,7 +19,7 @@ export default function handler(req, res) {
     apiRes.on('end', () => {
       try {
         const parsedData = JSON.parse(data);
-        res.status(200).json(parsedData);
+        res.status(200).json({ success: true, fact: parsedData.fact });
       } catch (err) {
         res.status(500).json({ error: 'Error parsing response' });
       }
